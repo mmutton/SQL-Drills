@@ -41,6 +41,11 @@ CREATE TABLE borrowers (
 	borrower_phone VARCHAR(30)
 	);
 
+CREATE TABLE [dbo].[library_branch](
+	[branch_id] [int] IDENTITY(5,5) NOT NULL,
+	[branch_name] [varchar](200) NULL,
+	[branch_address] [varchar](200) NULL);
+
 --Time for data inserts for the tables
 
 INSERT INTO books
