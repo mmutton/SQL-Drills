@@ -295,12 +295,16 @@ INSERT INTO loans
 ;
 
 	--How many copies of "the Lost Tribe" in the Sharpstown Library branch--
+
+CREATE PROCEDURE libraryDrill @bookTitle varchar(200), @branchName varchar(200) OUTPUT
+AS
 SELECT c.quantity, l.branch_name, b.book_title 
 	FROM book_copies c
 	INNER JOIN books b ON b.book_id = c.book_id
 	INNER JOIN library_branch l ON c.branch_id = l.branch_id
-	WHERE book_title = 'The Lost Tribe' AND branch_name = 'Sharpstown';
+	WHERE book_title = @bookTitle AND branch_name = @branchName;
 
+	EXEC libraryDrill @bookTitle='Emma', @branchName='Sharpstown'
 	--How many copies of "The lost Tribe" in each library--
 SELECT c.branch_id, l.branch_name, c.quantity, b.book_title
 	FROM book_copies c
@@ -339,6 +343,9 @@ SELECT b.borrower_id, b.borrower_lastName, b.borrower_address, COUNT(*) as NoCop
 	 GROUP BY b.borrower_lastName, b.borrower_address, b.borrower_id HAVING COUNT(*)>5 
 
 	--retrieve the title and number of Stephen King novel copies owned by the library branch "Central"
+    --create stored procedure--
+
+CREATE PROCEDURE 
 
 SELECT b.book_title, bc.quantity, a.author_name, lb.branch_name
 	FROM books b 
